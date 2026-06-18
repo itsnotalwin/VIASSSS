@@ -92,6 +92,23 @@ export const CanvasView: React.FC<CanvasViewProps> = ({
     return contained;
   };
 
+  // Stacking order
+  const [stacking, setStacking] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Initialize stacking order if empty
+    if (stacking.length === 0 && items.length > 0) {
+      setStacking(items.map(i => i.id));
+    }
+  }, [items, stacking]);
+
+  const bringToFront = (id: string) => {
+    setStacking(prev => {
+      const next = prev.filter(x => x !== id);
+      return [...next, id];
+    });
+  };
+
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLElement;
     const cardEl = target.closest('.c-card');
@@ -105,6 +122,8 @@ export const CanvasView: React.FC<CanvasViewProps> = ({
       e.preventDefault();
       const id = (cardEl as HTMLElement).dataset.id!;
       const rect = cardEl.getBoundingClientRect();
+      
+      bringToFront(id);
       
       setDragItem({
         id,
@@ -433,15 +452,21 @@ export const CanvasView: React.FC<CanvasViewProps> = ({
         {/* Render Cards (Foreground Level) */}
         {items.map((item) => {
           const pos = localPos[item.id] || { x: 0, y: 0 };
+          const stackIdx = stacking.indexOf(item.id);
+          const zi = stackIdx === -1 ? 10 : 10 + stackIdx;
+          const isDragging = dragItem?.id === item.id;
+          
           return (
             <div
               key={item.id}
               data-id={item.id}
-              className="c-card absolute"
+              className={`c-card absolute transition-shadow duration-300 ${isDragging ? 'shadow-2xl' : ''}`}
               style={{
                 left: `${pos.x}px`,
                 top: `${pos.y}px`,
-                zIndex: dragItem?.id === item.id ? 999 : 10
+                zIndex: isDragging ? 9999 : zi,
+                transform: isDragging ? 'scale(1.02)' : 'scale(1)',
+                transition: 'transform 0.1s ease-out, shadow 0.1s ease-out'
               }}
             >
               <Card

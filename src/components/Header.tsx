@@ -152,7 +152,7 @@ export const Header: React.FC<HeaderProps> = ({
         />
       </div>
 
-      {/* Layout selector (Grid / Canvas) */}
+      {/* Layout selector (Grid / Spatial) */}
       <div className="hidden md:flex bg-[var(--text)]/5 p-1 rounded-2xl border border-[var(--border)] shrink-0">
         <button 
           onClick={() => onViewChange('grid')}
@@ -165,8 +165,8 @@ export const Header: React.FC<HeaderProps> = ({
           onClick={() => onViewChange('canvas')}
           className={`px-4 py-1.5 rounded-xl text-[10px] font-black uppercase tracking-widest transition flex items-center gap-2 ${view === 'canvas' ? 'bg-[var(--text)] text-[var(--app-bg)] shadow-xl shadow-[var(--text)]/10' : 'text-[var(--text-muted)] hover:text-[var(--text)]'}`}
         >
-          <Milestone className="w-3.5 h-3.5" />
-          <span>Canvas</span>
+          <BarChart2 className="w-3.5 h-3.5 rotate-90" />
+          <span>Spatial Board</span>
         </button>
       </div>
 

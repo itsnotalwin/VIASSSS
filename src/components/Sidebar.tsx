@@ -151,7 +151,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 onClick={() => { onViewChange('canvas'); onClose(); }}
                 className={`flex-1 py-1.5 rounded-md text-xs font-medium transition ${view === 'canvas' ? 'bg-[var(--text)]/10 text-[var(--text)] shadow' : 'text-[var(--text-muted)]'}`}
               >
-                Canvas
+                Spatial Board
               </button>
             </div>
 
@@ -481,7 +481,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
         </div>
 
         {/* Footer info & persistent credits */}
-        <div className="px-4 pt-4 border-t border-[var(--border)] flex flex-col gap-2 items-center md:items-start select-none">
+        <div 
+          className="px-4 py-4 border-t border-[var(--border)] flex flex-col gap-2 items-center md:items-start select-none"
+          style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 1rem)' }}
+        >
           <div className="text-[10px] font-mono text-[var(--text-dim)] text-center md:text-left w-full mt-1">VIAS.OS Archive Ecosystem</div>
           <div className="text-[9px] font-mono text-[var(--text-muted)]/20 text-center md:text-left w-full">v1.2.0 · Offline Sync · Local Storage</div>
         </div>

@@ -145,7 +145,10 @@ export const StartupScreen: React.FC<StartupScreenProps> = ({ onComplete }) => {
       </div>
 
       {/* Brutalist Fine Print */}
-      <div className="absolute bottom-12 left-12 right-12 flex justify-between items-end">
+      <div 
+        className="absolute bottom-6 left-12 right-12 flex justify-between items-end"
+        style={{ marginBottom: 'env(safe-area-inset-bottom)' }}
+      >
         <div className="flex flex-col gap-1">
           <span className="text-[8px] font-mono text-black/40 uppercase tracking-[0.4em]">Proprietary Visual OS</span>
           <span className="text-[8px] font-mono text-black/20 uppercase tracking-[0.4em]">No Permissions Required</span>

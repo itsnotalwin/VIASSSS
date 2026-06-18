@@ -8,8 +8,7 @@ import { StartupScreen } from './components/StartupScreen';
 import { ArchiveItem, CanvasPosition, FilterState, CanvasFrame, Colony } from './types';
 import { 
   fetchMeta, compressImage, 
-  detectType, domainOf, ytId, 
-  isStaticHost
+  detectType, domainOf, ytId
 } from './lib/archive';
 
 // Import Modular Components
@@ -37,7 +36,7 @@ export default function App() {
   const [canvasFrames, setCanvasFrames] = useState<Record<string, CanvasFrame>>({});
   
   // UI States
-  const [view, setView] = useState<'grid' | 'canvas'>('grid');
+  const [view, setView] = useState<'grid' | 'canvas'>('canvas');
   const [gridCols, setGridCols] = useState('auto');
   const [captureInput, setCaptureInput] = useState('');
   const [isIngesting, setIsIngesting] = useState(false);
@@ -547,6 +546,7 @@ export default function App() {
     };
 
     setItems(prev => [newItem, ...prev]);
+    setActiveDetailId(newItem.id);
     addToast('Added new sticky note.');
 
     try {
@@ -937,13 +937,9 @@ export default function App() {
     addToast('The visual board is now cleared.');
   }, [addToast]);
 
-  // Click card trigger opens quick action menu
+  // Click card trigger opens Detail Panel directly
   const handleCardClick = useCallback((id: string, e: React.MouseEvent) => {
-    setQuickActionMenu({
-      itemId: id,
-      x: e.clientX,
-      y: e.clientY
-    });
+    setActiveDetailId(id);
   }, []);
 
   const handleCardZoomClick = useCallback((id: string, e: React.MouseEvent) => {
@@ -965,12 +961,6 @@ export default function App() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
           className="flex flex-col w-full h-[100dvh] select-none overflow-hidden bg-[var(--app-bg)] text-[var(--text)] font-sans antialiased text-sm leading-relaxed"
-          style={{
-            paddingTop: 'env(safe-area-inset-top)',
-            paddingBottom: 'env(safe-area-inset-bottom)',
-            paddingLeft: 'env(safe-area-inset-left)',
-            paddingRight: 'env(safe-area-inset-right)'
-          }}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}

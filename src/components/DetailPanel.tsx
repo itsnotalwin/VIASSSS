@@ -34,6 +34,8 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
   const [itemCols, setItemCols] = useState<string[]>([]);
   const [mediaBlobUrl, setMediaBlobUrl] = useState<string | null>(null);
 
+  const noteRef = useRef<HTMLTextAreaElement>(null);
+
   // Track state sync with item prop changes
   useEffect(() => {
     if (item) {
@@ -42,6 +44,11 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
       setTextContent(item.textContent || '');
       setTags(item.tags || []);
       setItemCols(item.collections || []);
+
+      // Auto-focus note if it's a new or empty sticky content
+      if (item.type === 'note' && (item.textContent === '' || item.textContent === 'Just a quick thought...')) {
+        setTimeout(() => noteRef.current?.focus(), 400); 
+      }
       
       // Load local blobs if PDF or local video is loaded
       let active = true;
@@ -231,6 +238,7 @@ export const DetailPanel: React.FC<DetailPanelProps> = ({
           <div className="flex flex-col gap-1.5">
             <label className="text-[10px] font-bold tracking-widest text-yellow-500 uppercase">Sticky Content</label>
             <textarea 
+              ref={noteRef}
               placeholder="Jot down quick contextual thoughts..."
               value={textContent || ''}
               onChange={(e) => setTextContent(e.target.value)}
