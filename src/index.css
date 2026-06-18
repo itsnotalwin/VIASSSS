@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  :root {
+    --app-bg: #000000;
+    --surface: #0a0a0a;
+    --surface-higher: #121212;
+    --border: #1a1a1a;
+    --border-bright: #262626;
+    --text: #ffffff;
+    --text-muted: #737373;
+    --text-dim: #404040;
+    --accent: #ffffff;
+  }
+
+  .light {
+    --app-bg: #ffffff;
+    --surface: #f5f5f5;
+    --surface-higher: #eeeeee;
+    --border: #e5e5e5;
+    --border-bright: #d4d4d4;
+    --text: #000000;
+    --text-muted: #737373;
+    --text-dim: #a3a3a3;
+    --accent: #000000;
+  }
+
+  body {
+    @apply antialiased selection:bg-[var(--text)] selection:text-[var(--app-bg)];
+    background-color: var(--app-bg);
+    color: var(--text);
+    overflow: hidden;
+    overscroll-behavior: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight leading-tight;
+  }
+
+  /* Allow text selection in specific areas */
+  input, textarea, [contenteditable="true"], .selectable-text {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
+/* Scrollbar Refinement */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--text-dim);
+  border-radius: 10px;
+  opacity: 0.2;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Utilitarian Monochrome Classes */
+.mono-border {
+  @apply border border-[var(--border)];
+}
+
+.mono-surface {
+  @apply bg-[var(--surface)] border border-[var(--border)];
+}
+
+.mono-glass {
+  @apply backdrop-blur-2xl bg-[var(--app-bg)]/40 border border-[var(--border)];
+}
+
+/* Animations */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); filter: blur(4px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Masonry Overrides */
+.masonry-grid {
+  display: flex;
+  margin-left: -1.5rem;
+  width: auto;
+}
+
+.masonry-column {
+  padding-left: 1.5rem;
+  background-clip: padding-box;
+}
+
+.bg-dot-pattern {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.07) 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+}
+
+.bg-noise {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  mix-blend-mode: overlay;
+}

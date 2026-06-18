@@ -1,0 +1,51 @@
+{
+  "entities": {
+    "ArchiveItem": {
+      "title": "ArchiveItem",
+      "description": "A single card inside the visual board representing an archived asset.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "The unique ID of the archived item." },
+        "type": { "type": "string", "enum": ["link", "image", "video", "pdf", "document", "html", "note"], "description": "Asset type categorization." },
+        "url": { "type": "string", "description": "The source path or absolute hyperlink." },
+        "title": { "type": "string", "description": "Asset display name." },
+        "description": { "type": "string", "description": "Meta description content." },
+        "thumbnail": { "type": "string", "description": "Image link or processed image preview." },
+        "domain": { "type": "string", "description": "Canonical namespace value." },
+        "tags": { "type": "array", "description": "Collection of categorization labels." },
+        "collections": { "type": "array", "description": "Collection of group folder links." },
+        "notes": { "type": "string", "description": "User notes annotation content." },
+        "textContent": { "type": "string", "description": "Extracted textual data." },
+        "createdAt": { "type": "number", "description": "Epoch timestamp when registered." },
+        "updatedAt": { "type": "number", "description": "Epoch timestamp when modified." },
+        "openCount": { "type": "number", "description": "Incremental page access metrics." },
+        "favorite": { "type": "boolean", "description": "Indicator of user bookmarking status." },
+        "isLocalFile": { "type": "boolean", "description": "Indicates if the file content is stored directly on IndexedDB." },
+        "fileName": { "type": "string", "description": "Original file name of asset if uploaded manually." },
+        "fileSize": { "type": "number", "description": "Size metrics in bytes." },
+        "colonyId": { "type": "string", "description": "Clustered colony reference path." }
+      },
+      "required": ["id", "type", "url", "title", "createdAt", "updatedAt", "openCount", "favorite"]
+    },
+    "SharedConfig": {
+      "title": "SharedConfig",
+      "description": "Visual layout, spatial positions, and lists sync configurations.",
+      "type": "object",
+      "properties": {
+        "collections": { "type": "array", "description": "Array of category tag names available." },
+        "canvasPositions": { "type": "object", "description": "Absolute drag positions on the canvas." },
+        "canvasFrames": { "type": "object", "description": "Dictionary of spatial frames on canvas board." }
+      }
+    }
+  },
+  "firestore": {
+    "/shared_items/{itemId}": {
+      "schema": "ArchiveItem",
+      "description": "Synchronized vault items."
+    },
+    "/shared_config/{configId}": {
+      "schema": "SharedConfig",
+      "description": "Global folder groups, drag positioning, and visual state assets."
+    }
+  }
+}
