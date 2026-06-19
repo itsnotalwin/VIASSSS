@@ -11,17 +11,17 @@
     <meta name="apple-mobile-web-app-title" content="VIAS" />
     <meta name="description" content="VIAS - A visual internet archive and mood board with real-time sync, interactive canvas, and local file storage." />
     <!-- Use relative paths so GitHub pages works nicely -->
-    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="shortcut icon" type="image/svg+xml" href="/logo.svg" />
-    <link rel="manifest" href="/manifest.json" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/pwa-192x192.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/pwa-192x192.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="/pwa-512x512.png" />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="shortcut icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" sizes="180x180" href="pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="pwa-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="pwa-512x512.png" />
     <title>VIAS</title>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <script type="module" src="src/main.tsx"></script>
     <script>
       // Prevent theme flashing
       const savedTheme = localStorage.getItem('atlas_theme');
@@ -35,7 +35,7 @@
       
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js').then(registration => {
+          navigator.serviceWorker.register('sw.js').then(registration => {
             console.log('SW registered: ', registration);
           }).catch(registrationError => {
             console.log('SW registration failed: ', registrationError);

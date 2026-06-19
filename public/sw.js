@@ -3,10 +3,10 @@ const STORE_NAME = 'shared_items';
 const CACHE_NAME = 'vias-v9';
 
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/logo.svg',
-  '/manifest.json'
+  './',
+  'index.html',
+  'logo.svg',
+  'manifest.json'
 ];
 
 function openDB() {
@@ -97,7 +97,7 @@ self.addEventListener('fetch', (event) => {
             return networkResponse;
           })
           .catch(() => {
-            return caches.match(event.request).then((response) => response || caches.match('/'));
+            return caches.match(event.request).then((response) => response || caches.match('index.html'));
           })
       );
       return;
@@ -123,7 +123,7 @@ self.addEventListener('fetch', (event) => {
         }).catch(() => {
           // If network fails and it's a navigation request, return index.html
           if (event.request.mode === 'navigate') {
-            return caches.match('/');
+            return caches.match('index.html');
           }
         });
       })
