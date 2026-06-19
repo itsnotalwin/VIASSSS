@@ -156,15 +156,26 @@ export async function compressImage(file: File, maxKB = 200): Promise<string> {
           canvas.width = width;
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          
+          let mimeType = 'image/jpeg';
+          if (file.type === 'image/png' || file.type === 'image/webp') {
+             // WebP supports alpha and lossy compression
+             mimeType = 'image/webp';
+          }
+          
+          let dataUrl = canvas.toDataURL(mimeType, quality);
+          
+          // If browser doesn't support webp, it falls back to image/png, which ignores quality.
+          const isFallbackPng = mimeType === 'image/webp' && dataUrl.startsWith('data:image/png');
+
           const sizeKB = (dataUrl.length * 0.75) / 1024;
           if (sizeKB > maxKB) {
-            if (quality > 0.2) {
+            if (quality > 0.2 && !isFallbackPng) {
               quality -= 0.1;
             } else if (width > 300) {
               width *= 0.85;
               height *= 0.85;
-              quality = 0.8;
+              quality = isFallbackPng ? quality : 0.8;
             } else {
               resolve(dataUrl);
               return;
